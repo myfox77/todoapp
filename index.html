@@ -16,7 +16,7 @@
         <button v-on:click="fetchItems">search</button>
 
         <div>
-            <ul>
+            <ul id="list">
                 <li v-for="(todoItem, index) in todoItems">
                     {{ todoItem}} {{ index }}
                     <button v-on:click="removeItem(todoItem, index)">remove</button>
@@ -46,27 +46,28 @@
                 //console.log('add item text');                
                // if(event.keyCode === 13) {
                     var value = this.inputText;
-                    localStorage.setItem(value, value);                    
-                    this.inputText = ''; 
-                    this.todoItems.push(value);           
+                    localStorage.setItem(value, value);
+                    this.inputText = '';
+                    this.todoItems.push(value);
                     //axiso.post('주소', this.inputText);
                // }
             }, 
             removeItem: function(todoItem, index) {
-                console.log(todoItem, index);
+                //console.log(todoItem, index);
                 this.todoItems.splice(index,1);
                 localStorage.removeItem(todoItem);
                 
             },
             fetchItems: function() {
+                const div_ul = document.querySelector('#list');
+                [].slice.call(div_ul.children).forEach(child => div_ul.removeChild(child));
+
                 //axios.get('/todo');
                 for(var i=0; i<localStorage.length; i++) {                    
                     var value = localStorage.key(i);
-                    console.log('value'+value);
+                    //console.log('value'+value);
                     this.todoItems.push(value);                    
                 }
-
-
             }
 
           }
